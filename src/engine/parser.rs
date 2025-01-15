@@ -23,3 +23,10 @@ pub enum ParseError {
     #[error("ParseError: empty expression")]
     Empty,
 }
+
+fn parse_escape(pos: usize, c: char) -> Result<AST, ParseError> {
+    match c {
+        '\\' | '(' | ')' | '|' | '+' | '*' | '?' => Ok(AST::Char(c)),
+        _ => Err(ParseError::InvalidEscape(pos, c)),
+    }
+}
